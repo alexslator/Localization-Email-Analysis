@@ -1,22 +1,11 @@
-# Slator — Request Readiness Inbox (v3)
+# Slator — Localization Request Readiness Inbox using Jev
 
-A local inbox dashboard for enterprise translation intake, with the official Slator logo. Read all currently unread Gmail or Outlook Inbox messages, identify translation requests, analyze supported source attachments, infer target languages and deadlines, and show brief completeness, capacity and clarification points alongside each email.
+A local inbox dashboard for enterprise translation intake. Steps = Read all currently unread Gmail or Outlook Inbox messages, identify translation requests, analyze supported source attachments, infer target languages and deadlines, and show brief completeness, capacity and clarification points alongside each email.
 
-## Upgrade from the first version
+## Requirements
 
-1. Unzip this package. Create a new `.env` file containing your JEV key.
-2. Open Terminal in the updated `request-readiness-check` folder and run:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-python3 app.py
-```
-
-Open **http://127.0.0.1:8765**. Refresh the browser. 
-
-The upload interface remains at **Manual document check**. Mailbox connection and sender domains are configured in Terminal and `.env`; there are no account or sample-inbox controls in the dashboard.
+This code requires a JEV API key and read access to either a Gmail account or an Outlook account (steps explained below).
+Data is sent to JEV / Typesafe.ai for analysis.
 
 ## Fresh installation
 
@@ -94,7 +83,7 @@ Filtering uses the domain of the parsed From address, case-insensitively and exa
 
 Changing the filter takes effect on the next scan after restart, including older unread emails. Prior results remain in history. To rerun an already analyzed email, including the old `progit.pdf` request, select it in run history and click **Reanalyze this email**. Its sender must be allowed by the current filter. The app fetches the message and attachments again, updates its results, and preserves your capacity settings. This explicit reanalysis updates the stored result; it does not create a new arrival.
 
-The former 10 MB attachment and 300-page PDF limits have been removed in both inbox and manual-upload modes. Large files are parsed locally and counted in full; JEV still receives bounded excerpts, which are labeled as sampled. Partial extraction still requires a verified total word count for a capacity verdict.
+Large files are parsed locally and counted in full; JEV receives bounded excerpts, which are labeled as sampled. Partial extraction requires a verified total word count for a capacity verdict.
 
 ## Inbox workflow
 
@@ -130,7 +119,7 @@ All inferred deadlines are provisional until verified in the detail panel. The c
 
 JEV selects targets from the language/locale taxonomy in `email_inference.py`, including 31 common languages and selected regional variants. Multiple targets are supported; source languages should be excluded. Other or uncertain target languages are flagged for manual clarification. Customize the taxonomy for your buyers. General non-English JEV performance needs validation against your own data.
 
-## PDFs and word counts: the corrected behavior
+## PDFs and word counts
 
 - A PDF with non-readable pages displays **“words on readable pages only”**, with the page numbers identified.
 - No-text pages can be blank or scanned; the app does not claim they necessarily contain missing words.
