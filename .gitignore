@@ -1,0 +1,20 @@
+# API keys and OAuth credentials
+.env
+.env.*
+!.env.example
+gmail-credentials.json
+client_secret*.json
+*-token.json
+
+# Saved emails, authentication tokens, and analysis history
+.local/
+*.sqlite3
+*.sqlite3-*
+*.db
+
+# Local Python environment and generated files
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
